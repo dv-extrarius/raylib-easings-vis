@@ -9,7 +9,7 @@
 #include "raylib.h"
 #include "reasings.h"
 
-#if defined(PLATFORM_WEB)
+#if defined(PLATFORM_WEB) || defined(__EMSCRIPTEN__)
 #include <emscripten/emscripten.h>
 #endif
 
@@ -264,7 +264,7 @@ int main()
 {
     InitWindow(ScreenWidth, ScreenHeight, "Easings Visualization");
 
-#if defined(PLATFORM_WEB)
+#if defined(PLATFORM_WEB) || defined(__EMSCRIPTEN__)
     emscripten_set_main_loop(DoExampleLoop, 60, 1);
 #else
     SetTargetFPS(60);
