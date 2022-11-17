@@ -145,7 +145,7 @@ float CalculateEasing(unsigned int function, float time, float startValue, float
 void DoExampleLoop(void)
 {
     /////////////////////////////////////////////////////////////////
-    //Update Time and wrap 0..(TimeSpan + 2 * SitTime)
+    //Update Time and wrap to the range 0..(TimeSpan + 2 * SitTime)
     CurrentTime += GetFrameTime();
     CurrentTime = fmodf(CurrentTime, TimeSpan + 2.0f * SitStillTime);
     /////////////////////////////////////////////////////////////////
@@ -203,10 +203,12 @@ void DoExampleLoop(void)
 
     /////////////////////////////////////////////////////////////////
     //Draw a graph box with labels
-    DrawText("Time", GraphOffsetX + (GraphWidth / 3), GraphOffsetY - 20, 20, WHITE);
+    const int TextTimeWidth = MeasureText("Time", 20);
+    DrawText("Time", GraphOffsetX + (GraphWidth - TextTimeWidth) / 2, GraphOffsetY - 20, 20, WHITE);
+    const int TextPositionWidth = MeasureText("Position", 20);
     DrawTextPro(GetFontDefault(), "Position",
-        (Vector2){GraphOffsetX - 20.0f, GraphOffsetY + (GraphHeight / 3.0f)},
-        (Vector2){0.0f, 0.0f},
+        (Vector2){GraphOffsetX - 20.0f, GraphOffsetY + (GraphHeight + TextPositionWidth) / 2.0f},
+        (Vector2){0.0f, 00.0f},
         -90.0f, 20.0f, 2.0f, WHITE);
     DrawRectangleLines(GraphOffsetX, GraphOffsetY, GraphWidth, GraphHeight, WHITE);
     /////////////////////////////////////////////////////////////////
