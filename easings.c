@@ -22,7 +22,7 @@ const int GraphWidth = 500;
 const int GraphHeight = 500;
 
 int EasingFunction1 = 0;
-int EasingFunction2 = 4;
+int EasingFunction2 = 20;
 
 const float SitStillTime = 0.25f;
 const float TimeSpan = 3.0f;
@@ -134,6 +134,11 @@ float CalculateEasing(unsigned int function, float time, float startValue, float
         return EaseElasticOut(time, startValue, deltaValue, duration);
     case 24:
         return EaseElasticInOut(time, startValue, deltaValue, duration);
+
+    /////////////////////////////////////////////////////////////
+    //Can't actually reach here, but it silences a warning
+    default:
+        return 0.0f;
     }
 }
 
@@ -175,14 +180,14 @@ void DoExampleLoop(void)
     //Easing from GraphOffsetY to GraphOffsetY+GraphHeight, current time is 0 out of GraphWidth
     float PrevPosition1 = CalculateEasing(EasingFunction1, 0.0f, GraphOffsetY, GraphHeight, GraphWidth);
     float PrevPosition2 = CalculateEasing(EasingFunction2, 0.0f, GraphOffsetY, GraphHeight, GraphWidth);
-    for(int ii = 0; ii < GraphWidth; ii += 10)
+    for(int ii = 0; ii < GraphWidth; ii += 5)
     {
         //Easing from GraphOffsetY to GraphOffsetY+GraphHeight, current time is ii out of GraphWidth
-        float NextPosition1 = CalculateEasing(EasingFunction1, ii + 10, GraphOffsetY, GraphHeight, GraphWidth);
-        float NextPosition2 = CalculateEasing(EasingFunction2, ii + 10, GraphOffsetY, GraphHeight, GraphWidth);
+        float NextPosition1 = CalculateEasing(EasingFunction1, ii + 5, GraphOffsetY, GraphHeight, GraphWidth);
+        float NextPosition2 = CalculateEasing(EasingFunction2, ii + 5, GraphOffsetY, GraphHeight, GraphWidth);
 
-        DrawLine(ii + GraphOffsetX, PrevPosition1, ii + 10 + GraphOffsetX, NextPosition1, RED);
-        DrawLine(ii + GraphOffsetX, PrevPosition2, ii + 10 + GraphOffsetX, NextPosition2, BLUE);
+        DrawLine(ii + GraphOffsetX, PrevPosition1, ii + 5 + GraphOffsetX, NextPosition1, RED);
+        DrawLine(ii + GraphOffsetX, PrevPosition2, ii + 5 + GraphOffsetX, NextPosition2, BLUE);
 
         PrevPosition1 = NextPosition1;
         PrevPosition2 = NextPosition2;
@@ -200,13 +205,9 @@ void DoExampleLoop(void)
     //Draw a graph box with labels
     DrawText("Time", GraphOffsetX + (GraphWidth / 3), GraphOffsetY - 20, 20, WHITE);
     DrawTextPro(GetFontDefault(), "Position",
-        (Vector2){
-        GraphOffsetX - 20.0f, GraphOffsetY + (GraphHeight / 3.0f)
-    },
-        (Vector2){
-        0.0f, 0.0f
-    },
-            -90.0f, 20.0f, 2.0f, WHITE);
+        (Vector2){GraphOffsetX - 20.0f, GraphOffsetY + (GraphHeight / 3.0f)},
+        (Vector2){0.0f, 0.0f},
+        -90.0f, 20.0f, 2.0f, WHITE);
     DrawRectangleLines(GraphOffsetX, GraphOffsetY, GraphWidth, GraphHeight, WHITE);
     /////////////////////////////////////////////////////////////////
 
